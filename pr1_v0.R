@@ -1,0 +1,13 @@
+getwd()
+list.files()
+clichange = read.csv("climate_change.csv")
+str(clichange)
+
+train = subset(clichange, Year <=2006)
+test = subset(clichange, Year > 2006)
+model1=lm(Temp ~ MEI + CO2 + CH4 + N2O + CFC.11 + CFC.12 + TSI + Aerosols, data=train)
+summary(model1)
+cor (clichange$N2O, clichange$MEI)
+cor (clichange$CFC.11, clichange$MEI)
+model2=lm(Temp ~ MEI + N2O + TSI + Aerosols, data=train)
+summary(model2)

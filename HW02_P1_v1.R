@@ -1,0 +1,23 @@
+songs=read.csv("songs.csv")
+summary(songs)
+summary(songs$songtitle)
+length(songs$songtitle)
+SongsTrain = subset (songs, year <= 2009)
+SongsTest = subset (songs, year > 2009)
+nonvars = c("year", "songtitle", "artistname", "songID", "artistID")
+SongsTrain = SongsTrain[ , !(names(SongsTrain) %in% nonvars) ]
+SongsTest = SongsTest[ , !(names(SongsTest) %in% nonvars) ]
+str(SongsTest)
+str(SongsTrain)
+SongsLog1 = glm(Top10 ~ ., data=SongsTrain, family=binomial)
+summary(SongsLog1)
+PredictTrain = predict(SongsLog1, newdata = SongsTrain, type="response")
+table (SongsTrain$Top10,PredictTrain > 0.45)
+table (SongsTrain$Top10,PredictTrain > 0.45)/nrow(SongsTrain)
+0.82655187 + 0.03638384
+summary(SongsTest)
+summary(SongsTest$Top10==1)
+314/(314+59)
+PredictTest = predict(SongsLog1, newdata = SongsTest, type="response")
+table (SongsTest$Top10,PredictTest > 0.45)
+table (SongsTest$Top10,PredictTest > 0.45) / nrow(SongsTest)
